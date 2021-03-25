@@ -4,7 +4,7 @@
 # AutoBuild DiyScript
 
 Diy_Core() {
-	Author=Hyy2001
+	Author=RXRW
 	Default_Device=
 
 	INCLUDE_AutoUpdate=true
@@ -41,6 +41,8 @@ Diy-Part2() {
 	Replace_File Customize/uhttpd.po feeds/luci/applications/luci-app-uhttpd/po/zh-cn
 	Replace_File Customize/webadmin.po package/lean/luci-app-webadmin/po/zh-cn
 	Replace_File Customize/mwan3.config package/feeds/packages/mwan3/files/etc/config mwan3
+	# Modify default IP
+	sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
 	case ${TARGET_PROFILE} in
 	d-team_newifi-d2)
