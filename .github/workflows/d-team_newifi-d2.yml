@@ -29,8 +29,8 @@ env:
   DIY_SCRIPT: Scripts/AutoBuild_DiyScript.sh
   FUNCTION_SCRIPT: Scripts/AutoBuild_Function.sh
   UPLOAD_RELEASE: true
-  UPLOAD_FIRMWARE: false
-  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_BIN_DIR: true
   REMOVE_OLD_RELEASE: false
   REMOVE_WORKFLOW_RUNS: true
 
@@ -133,7 +133,7 @@ jobs:
       with:
         name: OpenWrt_Firmware_${{ env.Artifacts_DATE }}
         path: openwrt/bin/Firmware
-        
+
     - name: Upload Firmware directory to Artifacts
       uses: actions/upload-artifact@main
       if: env.UPLOAD_BIN_DIR == 'true' && !cancelled()
@@ -150,7 +150,7 @@ jobs:
         tag_name: AutoUpdate
         body_path: update_log.txt
         files: openwrt/bin/Firmware/*
-        
+
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
@@ -159,7 +159,7 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+
     - name: Remove workflow runs
       uses: GitRML/delete-workflow-runs@main
       if: env.REMOVE_WORKFLOW_RUNS == 'true' && !cancelled()
